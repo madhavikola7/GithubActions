@@ -1,6 +1,6 @@
 name: Build and Push Docker Image
 
-on:
+on: 
   push:
     branches:
       - main
@@ -28,3 +28,7 @@ jobs:
         context: .
         push: true
         tags: ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_IMAGENAME}}:latest
+
+    - name: Run docker image
+      run: |
+        docker run -d -p 8080:80 ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_IMAGENAME}}:latest
