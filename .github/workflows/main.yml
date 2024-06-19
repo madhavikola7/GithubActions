@@ -27,4 +27,4 @@ jobs:
       with:
         context: .
         push: true
-        tags: madhavikola7/faq_site:latest
+        tags: madhavikola/faq_site:latest
