@@ -1,0 +1,77 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+:root{
+    --White: hsl(0, 0%, 100%);
+   --Lightpink: hsl(275, 100%, 97%);
+   --Grayishpurple: hsl(292, 16%, 49%);
+   --Darkpurple: hsl(292, 42%, 14%);
+}
+body{
+    background-image: url('./assets/images/background-pattern-desktop.svg');
+    background-color: var(--Lightpink);
+    position: relative;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+
+}
+.maincontiner{
+    position: fixed;
+    background-color: var(--White);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 40%;
+    height: auto;
+    border-radius: 1.5rem;
+}
+.logo{
+    display: flex;
+    flex-direction: row;
+}
+.logo img{
+    margin:0rem 0.5rem;
+}
+.maincontiner h1{
+    font-weight: 700;
+    padding: 1rem 0rem;
+    margin: 1rem 0rem;
+}
+.HeaderContent{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0rem ;
+    border-bottom: 2px solid rgb(210, 207, 207);
+    margin-bottom: 1rem;
+
+}
+.HeaderContent img{
+    padding: 0rem 0.5rem ;
+    cursor: pointer;
+}
+ h3{
+    display: inline-block;
+    margin-left: 1rem;
+}
+.riddle {
+    padding: 1rem;
+    color: var(--Darkpurple);
+  display: none;
+  transition: 0.5s;
+}
+ .accord.active .riddle{
+    display: block;
+    transition: 0.5s;
+}
+ .maincontiner hr{
+    color: var(--Grayishpurple);
+}
+@media only screen and(max-width:700px){
+    .maincontiner{
+        width: 140%;
+    }
+}
