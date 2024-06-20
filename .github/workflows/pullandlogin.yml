@@ -1,0 +1,29 @@
+name: Pull Docker Image on Remote Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  pull-docker-image:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install SSH Client
+      run: sudo apt-get install -y openssh-client
+
+    - name: Add SSH key
+      uses: webfactory/ssh-agent@v0.7.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Pull Docker Image on Remote Server
+      run: |
+        ssh -o StrictHostKeyChecking=no madhavi@134.122.117.1 << 'EOF'
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker pull ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_IMAGENAME}}:latest
+        EOF
