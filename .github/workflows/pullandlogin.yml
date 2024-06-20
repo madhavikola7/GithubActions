@@ -16,14 +16,24 @@ jobs:
     - name: Install SSH Client
       run: sudo apt-get install -y openssh-client
 
-    - name: Add SSH key
-      uses: webfactory/ssh-agent@v0.7.0
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+    - name: Add SSH Key
+      run: |
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > key.pem
+        chmod 600 key.pem
+        eval $(ssh-agent -s)
+        ssh-add key.pem
+
+    - name: Add SSH Host Key
+      run: |
+        mkdir -p ~/.ssh
+        ssh-keyscan -H 134.122.117.1 >> ~/.ssh/known_hosts
 
     - name: Pull Docker Image on Remote Server
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       run: |
         ssh -o StrictHostKeyChecking=no madhavi@134.122.117.1 << 'EOF'
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
           docker pull ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_IMAGENAME}}:latest
         EOF
